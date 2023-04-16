@@ -1,15 +1,32 @@
 # Explorando Padrões de Projetos na Prática com Java
 
-Padrões de projeto são soluções reutilizáveis para problemas comuns de software. Eles descrevem como diferentes classes e objetos podem se relacionar e colaborar para realizar uma tarefa. Em Java, existem vários padrões de projeto reconhecidos que se enquadram em três categorias: criacionais, estruturais e comportamentais. Os padrões criacionais lidam com a criação de objetos, os padrões estruturais lidam com a composição de classes e objetos, e os padrões comportamentais lidam com a comunicação e responsabilidade entre objetos. Alguns exemplos de padrões de projeto em Java são: Singleton, Factory, Adapter, Observer e Strategy.
+Padrões de projeto são soluções reutilizáveis para problemas comuns de software. Eles descrevem como diferentes classes e objetos podem se relacionar e colaborar para realizar uma determinada tarefa. Os padrões de projeto podem ser classificados em três categorias principais: criacionais, estruturais e comportamentais.
 
-Neste projeto abordamos o Singleton juntamente com o Tech Lead da Digital Inovation One - DIO Venilton Falvo Jr a prática de padrões em Java puro. 
+Os padrões criacionais lidam com a criação de objetos, abstraindo os detalhes de sua construção e inicialização. Eles permitem que o código seja mais flexível e independente das classes concretas utilizadas. Alguns exemplos de padrões criacionais são: Singleton, Factory Method, Abstract Factory, Builder e Prototype.
 
-Um singleton é um padrão de projeto criacional que permite garantir que uma classe tenha apenas uma instância, enquanto provê um ponto de acesso global para essa instância . Esse padrão é útil para controlar o acesso a algum recurso compartilhado, como uma base de dados ou um arquivo. Para implementar um singleton, é necessário fazer o construtor padrão da classe privado, para evitar que outros objetos usem o operador new com a classe singleton. Além disso, é preciso criar um método estático de criação que age como um construtor e retorna a mesma instância da classe, armazenada em um campo estático. Assim, sempre que o método estático for chamado, o mesmo objeto será retornado. O singleton oferece uma alternativa segura às variáveis globais, pois protege a instância de ser sobrescrita por outro código.
+Os padrões estruturais lidam com a composição de classes e objetos, definindo como eles se organizam em estruturas maiores. Eles permitem que o código seja mais modular e adaptável a diferentes cenários. Alguns exemplos de padrões estruturais são: Adapter, Bridge, Composite, Decorator, Facade, Flyweight e Proxy.
+
+Os padrões comportamentais lidam com a comunicação e a responsabilidade entre classes e objetos, definindo como eles interagem e cooperam. Eles permitem que o código seja mais expressivo e fácil de entender. Alguns exemplos de padrões comportamentais são: Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method e Visitor.
+
+Os padrões de projeto em Java podem ser implementados usando os recursos da linguagem, como interfaces, classes abstratas, herança, polimorfismo, encapsulamento e delegação. Eles também podem se beneficiar de alguns recursos adicionais do Java 8 ou superior, como lambdas, streams e optional. Os padrões de projeto em Java podem ajudar a melhorar a qualidade do código, facilitando a manutenção, a extensão e o teste.
+
+O singleton é um padrão de projeto que visa garantir que uma classe tenha apenas uma instância em todo o programa e forneça um ponto de acesso global a ela. Esse padrão é útil quando se quer controlar o acesso a um recurso compartilhado, como uma conexão com um banco de dados ou um arquivo de configuração. O singleton também pode evitar a criação desnecessária de objetos que consomem muitos recursos ou que são difíceis de inicializar.
+
+Para implementar o singleton, é preciso definir um construtor privado na classe, para evitar que outras classes possam instanciá-la diretamente. Em seguida, é preciso criar um atributo estático que armazene a única instância da classe. Por fim, é preciso criar um método estático que retorne essa instância, criando-a se ainda não existir. Esse método é chamado de getInstance e é o responsável por garantir o acesso único à instância da classe.
+
+Neste projeto abordou-se o Singleton Lazy, Singleton Eager e o Singleton Lazy Holder.
+
+O singleton Lazy é um padrão de projeto que visa garantir que uma classe tenha apenas uma instância e forneça um ponto de acesso global a ela. Esse padrão é útil quando se quer evitar a criação desnecessária de objetos que consomem recursos ou que podem causar conflitos se existirem em múltiplas instâncias. O singleton Lazy difere do singleton Eager no momento em que a instância é criada. No singleton Eager, a instância é criada na inicialização da classe, o que pode causar problemas de performance ou de ordem de execução se a instância depender de outros recursos que ainda não estão disponíveis. No singleton Lazy, a instância é criada apenas quando for solicitada pela primeira vez, o que evita esses problemas e garante que a instância seja criada apenas se for realmente necessária. Para implementar o singleton Lazy em Java, pode-se usar uma das seguintes abordagens:
+
+- Usar um campo estático privado para armazenar a instância e um método estático público sincronizado para obtê-la. Esse método verifica se a instância já existe e, caso contrário, cria uma nova. Essa abordagem é simples, mas tem o inconveniente de sincronizar o método inteiro, o que pode reduzir a performance em ambientes multithread.
+- Usar um campo estático privado volátil para armazenar a instância e um método estático público para obtê-la. Esse método usa um bloco sincronizado dentro de uma verificação dupla para garantir que a instância seja criada apenas uma vez e de forma segura em ambientes multithread. Essa abordagem é mais eficiente que a anterior, mas requer o uso da palavra-chave volatile, que pode não ser suportada por todas as plataformas.
+- Usar uma classe interna estática privada para armazenar a instância e um método estático público para obtê-la. Esse método retorna a instância criada pela classe interna, que é carregada apenas quando for referenciada pela primeira vez. Essa abordagem é baseada no mecanismo de carregamento de classes do Java, que garante que a instância seja criada de forma lazy e thread-safe. Essa abordagem é considerada a mais elegante e recomendada para implementar o singleton Lazy em Java.
+
+O singleton Eager é um padrão de projeto que visa garantir que uma classe tenha apenas uma instância e forneça um ponto de acesso global a ela. Esse padrão é chamado de Eager porque a instância é criada na hora da inicialização da classe, antes de qualquer solicitação. Isso significa que a instância é criada independentemente de ser necessária ou não, o que pode levar a desperdício de recursos. Uma vantagem desse padrão é que ele é simples de implementar e thread-safe, pois não há necessidade de sincronização para obter a instância. 
+
+O singleton Lazy holder é um padrão de projeto que permite criar uma instância única de uma classe de forma preguiçosa, ou seja, somente quando for necessária. Esse padrão é útil para economizar recursos e garantir a consistência dos dados.
+
+O singleton Lazy holder funciona da seguinte forma: a classe que representa o singleton possui um construtor privado, para evitar que outras classes possam instanciá-la diretamente. Dentro dessa classe, existe uma classe interna privada chamada Lazy holder, que contém um campo estático final que armazena a única instância do singleton. Essa classe interna só é carregada pelo Java Virtual Machine (JVM) quando o método estático getInstance() da classe externa é invocado pela primeira vez. Assim, a instância do singleton é criada de forma preguiçosa e segura, sem a necessidade de sincronização explícita.
 
 O objetivo do projeto é implementar a prática no desenvolvedor de criar padrões reutilizáveis para projetos futuros.
 
-#CONTRATODECOMPROMISSO
-
-DIO
-
-Encarar os desafios é o primeiro passo para mudar de vida!
